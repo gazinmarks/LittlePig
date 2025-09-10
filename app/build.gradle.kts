@@ -34,9 +34,17 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    viewBinding {
+        enable = true
+    }
+    dataBinding {
+        enable = true
+    }
 }
 
 dependencies {
+    implementation(project(":FeatureLogin"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
