@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "LittlePig"
 include(":app")
+include(":FeatureLogin")
