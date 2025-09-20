@@ -44,6 +44,8 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="@dimen/fifteen_dp_size"
         android:background="@color/blue"
+        android:clickable="true"
+        android:focusable="true"
         android:text="@string/text_button_login"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"

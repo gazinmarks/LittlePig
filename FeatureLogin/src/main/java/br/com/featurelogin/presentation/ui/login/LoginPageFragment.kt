@@ -1,4 +1,4 @@
-package br.com.featurelogin.presentation.ui
+package br.com.featurelogin.presentation.ui.login
 
 import android.os.Bundle
 import android.view.LayoutInflater

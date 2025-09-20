@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginPageFragment"
-        android:name="br.com.featurelogin.presentation.ui.LoginPageFragment"
+        android:name="br.com.featurelogin.presentation.ui.login.LoginPageFragment"
         android:label="LoginPageFragment"
         tools:layout="@layout/login_page_fragment" />
 </navigation>
