@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="fifteen_dp_size">15dp</dimen>
+    <dimen name="thirty_dp_size">30dp</dimen>
     <dimen name="six_hundred_dp_size">60dp</dimen>
+
+    <dimen name="twenty_two_sp_size">22sp</dimen>
 </resources>

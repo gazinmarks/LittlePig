@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">LittlePig</string>
+    <string name="text_button_login">Acessar</string>
+    <string name="text_button_register">Cadastrar</string>
+    <string name="text_back">Voltar</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_username">Seu nome</string>
+    <string name="hint_password">Senha</string>
+    <string name="create_free_account">Criar uma conta gratuita</string>
+    <string name="my_transactions">Minhas movimentações</string>
 </resources>

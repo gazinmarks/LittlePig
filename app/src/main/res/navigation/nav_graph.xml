@@ -7,7 +7,20 @@
 
     <fragment
         android:id="@+id/loginPageFragment"
-        android:name="br.com.featurelogin.presentation.ui.login.LoginPageFragment"
+        android:name="br.com.littlepig.presentation.ui.login.LoginPageFragment"
         android:label="LoginPageFragment"
-        tools:layout="@layout/login_page_fragment" />
+        tools:layout="@layout/login_page_fragment">
+        <action
+            android:id="@+id/navigate_to_registerPageFragment"
+            app:destination="@id/registerPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerPageFragment"
+        android:name="br.com.littlepig.presentation.ui.register.RegisterPageFragment"
+        android:label="RegisterPageFragment"
+        tools:layout="@layout/register_page_fragment">
+        <action
+            android:id="@+id/navigate_to_loginPageFragment"
+            app:destination="@id/loginPageFragment" />
+    </fragment>
 </navigation>
