@@ -1,4 +1,4 @@
-package br.com.littlepig
+package br.com.littlepig.presentation.main
 
 import android.os.Bundle
 import android.view.View
@@ -6,8 +6,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import br.com.littlepig.R
 import br.com.littlepig.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)

@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toolbar
-import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import br.com.littlepig.MainActivity
+import br.com.littlepig.presentation.main.MainActivity
 import br.com.littlepig.R
 import br.com.littlepig.databinding.RegisterPageFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterPageFragment : Fragment() {
     private val binding: RegisterPageFragmentBinding by lazy {
         RegisterPageFragmentBinding.inflate(layoutInflater)

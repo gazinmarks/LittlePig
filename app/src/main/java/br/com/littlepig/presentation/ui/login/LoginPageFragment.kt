@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.littlepig.R
 import br.com.littlepig.databinding.LoginPageFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginPageFragment : Fragment() {
     private val binding: LoginPageFragmentBinding by lazy {
         LoginPageFragmentBinding.inflate(layoutInflater)
