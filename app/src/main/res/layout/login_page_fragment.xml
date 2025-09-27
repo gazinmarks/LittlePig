@@ -53,6 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/field_password" />
 
     <TextView
+        android:id="@+id/create_account_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fifteen_dp_size"
