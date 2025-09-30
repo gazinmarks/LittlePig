@@ -27,11 +27,9 @@ class RegisterViewModel @Inject constructor(
             useCase.invoke(fields)
                 .fold(
                     onSuccess = {
-                        Log.d("GABRIEL", "Result viewModel: $it")
                         _user.postValue(State.Success)
                     },
                     onFailure = { exception ->
-                        Log.d("GABRIEL", "Exception viewModel: $exception")
                         _user.postValue(State.Failure(exception))
                     }
                 )
