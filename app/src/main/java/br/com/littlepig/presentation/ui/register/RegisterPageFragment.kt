@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +12,7 @@ import br.com.littlepig.R
 import br.com.littlepig.databinding.RegisterPageFragmentBinding
 import br.com.littlepig.presentation.main.MainActivity
 import br.com.littlepig.presentation.ui.register.viewmodel.RegisterViewModel
+import br.com.littlepig.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,16 +62,12 @@ class RegisterPageFragment : Fragment() {
         viewModel.user.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is RegisterViewModel.State.Success -> {
-                    Toast.makeText(
-                        requireContext(), "Usuario registrado com sucesso", Toast.LENGTH_SHORT
-                    ).show()
+                    context?.showToast("Usuario registrado com sucesso")
                     navigateToLogin()
                 }
 
                 is RegisterViewModel.State.Failure -> {
-                    Toast.makeText(
-                        requireContext(), "${state.error}", Toast.LENGTH_SHORT
-                    ).show()
+                    context?.showToast("${state.error}")
                 }
 
                 is RegisterViewModel.State.Loading -> {
