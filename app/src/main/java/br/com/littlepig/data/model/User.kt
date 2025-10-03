@@ -1,12 +1,12 @@
 package br.com.littlepig.data.model
 
-import com.google.gson.annotations.SerializedName
+import java.util.Date
 
 data class User(
-    @SerializedName("name")
+    val id: String,
     val name: String,
-    @SerializedName("password")
-    val password: String,
-    @SerializedName("email")
-    val email: String
+    val email: String,
+    val balance: Long,
+    val createdAt: Date,
+    val updatedAt: Date
 )
