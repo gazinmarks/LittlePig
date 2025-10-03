@@ -1,21 +1,23 @@
-package br.com.littlepig.domain
+package br.com.littlepig.domain.register
 
 import android.util.Log
 import br.com.littlepig.data.model.User
+import br.com.littlepig.data.model.UserRegisterRequest
 import br.com.littlepig.data.repository.IUserRepository
+import br.com.littlepig.utils.isFieldsInvalid
 import javax.inject.Inject
 
 class RegisterUseCase @Inject constructor(
     private val repository: IUserRepository
 ) : IRegisterUseCase {
-    override suspend fun invoke(fields: List<String>): Result<Unit> {
+    override suspend fun invoke(fields: List<String>): Result<User> {
         return runCatching {
-            if (isFieldsInvalid(fields)) {
+            if (fields.isFieldsInvalid()) {
                 throw Exception()
             }
             val (name, password, email) = fields
 
-            val user = User(name, password, email)
+            val user = UserRegisterRequest(name, password, email)
 
             repository.registerUser(user)
         }.onSuccess {
@@ -26,8 +28,6 @@ class RegisterUseCase @Inject constructor(
             Result.failure<Exception>(exception)
         }
     }
-
-    private fun isFieldsInvalid(fields: List<String>): Boolean = fields.any { it.isEmpty() }
 
     private companion object {
         const val TAG = "LITTLEPIG_LOG"

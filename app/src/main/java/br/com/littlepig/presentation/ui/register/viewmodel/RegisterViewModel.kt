@@ -1,10 +1,9 @@
 package br.com.littlepig.presentation.ui.register.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.littlepig.domain.IRegisterUseCase
+import br.com.littlepig.domain.register.IRegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
