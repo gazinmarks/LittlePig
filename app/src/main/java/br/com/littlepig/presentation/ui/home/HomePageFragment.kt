@@ -21,6 +21,4 @@ class HomePageFragment : Fragment() {
     ): View {
         return binding.root
     }
-
-
 }
