@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_transaction"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/calendar">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/eighteen_dp_size"
+        android:background="@drawable/container_rounded_ghost_white">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/type_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ten_dp_size"
+            android:layout_marginTop="@dimen/four_dp_size"
+            android:text="Despesa"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fourteen_sp_size"
+            android:textStyle="italic"
+            app:chipBackgroundColor="@color/red"
+            app:chipCornerRadius="@dimen/four_dp_size"
+            app:chipIcon="@drawable/ic_arrow_down"
+            app:chipIconTint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/value_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ten_dp_size"
+            android:text="R$ 780.00"
+            android:textSize="@dimen/twenty_four_sp_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/type_transaction"
+            app:layout_constraintTop_toBottomOf="@+id/type_transaction" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

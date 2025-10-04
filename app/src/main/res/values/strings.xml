@@ -8,4 +8,8 @@
     <string name="hint_password">Senha</string>
     <string name="create_free_account">Criar uma conta gratuita</string>
     <string name="my_transactions">Minhas movimentações</string>
+    <string name="last_transactions">Últimas movimentações</string>
+    <string name="current_balance">Saldo atual</string>
+    <string name="today_entries">Entradas de hoje</string>
+    <string name="today_outings">Saídas de hoje</string>
 </resources>
