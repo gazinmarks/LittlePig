@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.navigation)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.kapt)
+    jacoco
 }
 
 android {
@@ -42,6 +43,34 @@ android {
     dataBinding {
         enable = true
     }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+    jacoco {
+        version = "0.8.11"
+    }
+    tasks.register<JacocoReport>("jacocoTestReport") {
+        dependsOn("test")
+
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+        }
+
+        val fileFilter = listOf(
+            "**/R.class", "**/R$*.class",
+            "**/BuildConfig.*", "**/Manifest*.*",
+            "**/*Test*.*"
+        )
+
+        val debugTree = fileTree("${buildDir}/tmp/kotlin-classes/debug") {
+            exclude(fileFilter)
+        }
+
+        classDirectories.setFrom(files(debugTree))
+        sourceDirectories.setFrom(files("src/main/java", "src/main/kotlin"))
+        executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
+    }
 }
 
 dependencies {
@@ -58,8 +87,11 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.coroutines.core)
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
+    testImplementation("io.mockk:mockk:1.13.3")
+    testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     hilt {
