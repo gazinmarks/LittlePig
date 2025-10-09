@@ -4,7 +4,67 @@ Este documento detalha as regras de negócio implementadas nos casos de uso de *
 
 ---
 
-## 🔐 1. Login - `LoginUseCase.kt`
+## Contexto do projeto
+
+O LittlePig se trata de um aplicativo de organização financeira, tendo a possibilidade de registrar entradas e saídas de dinheiro
+e também a visualização do saldo como um todo, o que entrou no dia específico e o que saiu.
+
+Atualmente o app ainda continua em desenvolvimento, portanto apenas o registro e login de usuário estão aptos a serem testados.
+
+## 🚀 Como Rodar o Projeto
+
+Este projeto depende de uma **API externa** que precisa ser configurada antes da execução do app.
+
+### 🔗 1. Clone o repositório da API
+
+```bash
+git clone https://gitlab.com/DevRafaelSa/uniesp-financas-backend
+```
+
+## ⚙️ 2. Configure e inicie a API
+
+Dentro da pasta da API:
+
+# Gera o client do Prisma
+npx prisma generate
+
+# Roda as migrations e sobe o banco
+npx prisma migrate dev
+
+# Inicia o servidor
+npm run dev
+
+## 📱 3. Rode o app Android
+
+Abra o projeto no Android Studio
+
+Clique em Run ou use o atalho Shift + F10
+
+Certifique-se de que a API esteja ativa antes de rodar o app.
+
+## 🧪 Como Rodar os Testes
+
+Execute os testes unitários com:
+
+```
+./gradlew test
+```
+
+## ✅ Gerar Relatório de Cobertura com JaCoCo
+
+Para gerar relatório de cobertura (linhas testadas):
+
+```
+./gradlew testDebugUnitTest jacocoTestReport
+```
+
+O relatório HTML será gerado em:
+
+app/build/reports/jacoco/jacocoTestReport/html/index.html
+
+Abra esse arquivo no navegador para visualizar o que foi ou não testado.
+
+## 🔐 Login - `LoginUseCase.kt`
 
 O `LoginUseCase` é responsável por orquestrar a lógica de autenticação do usuário na aplicação.
 
@@ -76,7 +136,7 @@ Os testes para o `LoginUseCase` garantem que todas as regras de negócio sejam c
 
 ---
 
-## 📝 2. Cadastro - `RegisterUseCase.kt`
+## 📝 Cadastro - `RegisterUseCase.kt`
 
 O `RegisterUseCase` é responsável por gerenciar a lógica de criação de um novo usuário na aplicação.
 
