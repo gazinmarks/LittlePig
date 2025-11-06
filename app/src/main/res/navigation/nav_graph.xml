@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homePageFragment">
+    app:startDestination="@id/loginPageFragment">
 
     <fragment
         android:id="@+id/loginPageFragment"
@@ -14,7 +14,7 @@
             android:id="@+id/navigate_to_registerPageFragment"
             app:destination="@id/registerPageFragment" />
         <action
-            android:id="@+id/action_loginPageFragment_to_homePageFragment"
+            android:id="@+id/navigate_to_homePageFragment"
             app:destination="@id/homePageFragment" />
     </fragment>
     <fragment
@@ -30,5 +30,9 @@
         android:id="@+id/homePageFragment"
         android:name="br.com.littlepig.presentation.ui.home.HomePageFragment"
         android:label="HomePageFragment"
-        tools:layout="@layout/home_page_fragment" />
+        tools:layout="@layout/home_page_fragment" >
+        <action
+            android:id="@+id/navigate_to_loginPageFragment"
+            app:destination="@id/loginPageFragment" />
+    </fragment>
 </navigation>
