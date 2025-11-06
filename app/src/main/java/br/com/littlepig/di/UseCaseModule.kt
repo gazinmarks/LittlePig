@@ -4,6 +4,8 @@ import br.com.littlepig.domain.login.ILoginUseCase
 import br.com.littlepig.domain.login.LoginUseCase
 import br.com.littlepig.domain.register.IRegisterUseCase
 import br.com.littlepig.domain.register.RegisterUseCase
+import br.com.littlepig.domain.transactions.ITransactionsUseCase
+import br.com.littlepig.domain.transactions.TransactionsUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +19,7 @@ interface UseCaseModule {
 
     @Binds
     fun provideLoginUseCase(loginUseCase: LoginUseCase): ILoginUseCase
+
+    @Binds
+    fun provideTransactionsUseCase(transactionsUseCase: TransactionsUseCase): ITransactionsUseCase
 }
