@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintEnd_toEndOf="parent"
+    app:cardElevation="0dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/calendar">
 
@@ -12,7 +13,7 @@
         android:id="@+id/container_transaction"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/eighteen_dp_size"
+        android:layout_margin="@dimen/fourteen_dp_size"
         android:background="@drawable/container_rounded_ghost_white">
 
         <com.google.android.material.chip.Chip
