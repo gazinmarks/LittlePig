@@ -1,4 +1,4 @@
-package br.com.littlepig.domain.transactions
+package br.com.littlepig.domain.usecase.transactions
 
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
 

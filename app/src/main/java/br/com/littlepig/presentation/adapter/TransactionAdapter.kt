@@ -39,6 +39,7 @@ class TransactionAdapter :
                         setChipBackgroundColorResource(R.color.green)
                         setChipIconResource(R.drawable.ic_arrow_up)
                     }
+
                     false -> setChipBackgroundColorResource(R.color.red)
                 }
                 text = balance.tag

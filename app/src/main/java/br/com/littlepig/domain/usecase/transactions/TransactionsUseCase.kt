@@ -1,14 +1,13 @@
-package br.com.littlepig.domain.transactions
+package br.com.littlepig.domain.usecase.transactions
 
 import android.util.Log
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
 import br.com.littlepig.data.repository.IUserRepository
 import br.com.littlepig.domain.exceptions.AppExceptions
 import br.com.littlepig.preferences.DataStorePreferencesManager
-import br.com.littlepig.utils.Commons.KEY_USER_TOKEN
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import br.com.littlepig.utils.Commons.LOG_TAG
+import br.com.littlepig.utils.dateFormat
+import br.com.littlepig.utils.getUserToken
 import javax.inject.Inject
 
 class TransactionsUseCase @Inject constructor(
@@ -17,9 +16,10 @@ class TransactionsUseCase @Inject constructor(
 ) : ITransactionsUseCase {
     override suspend fun invoke(date: Long): Result<List<UserBalanceResponseItem>> {
         return runCatching {
-            val formattedDate = formatDate(date)
+            val formattedDate = date.dateFormat()
 
-            val token = getUserToken() ?: throw AppExceptions.TokenNotFound("Token not found")
+            val token =
+                dataStore.getUserToken() ?: throw AppExceptions.TokenNotFound("Token not found")
 
             val response = repository.getUserBalance(formattedDate, "Bearer $token")
 
@@ -27,9 +27,7 @@ class TransactionsUseCase @Inject constructor(
 
             when {
                 response.isSuccessful -> {
-                    response.body()?.filter { transactions ->
-                        !transactions.tag.contains("saldo", ignoreCase = true)
-                    } ?: throw AppExceptions.EmptyResponseException("Resposta vazia")
+                    response.body() ?: throw AppExceptions.EmptyResponseException("Resposta vazia")
                 }
 
                 response.code() == 401 -> {
@@ -45,17 +43,9 @@ class TransactionsUseCase @Inject constructor(
                 }
             }
         }.onSuccess {
-            Log.d("tag", "transacoes retornadas com sucesso $it")
+            Log.d(LOG_TAG, "transacoes retornadas com sucesso $it")
         }.onFailure {
-            Log.d("tag", "erro $it")
+            Log.d(LOG_TAG, "erro $it")
         }
     }
-
-    private fun formatDate(date: Long): String {
-        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
-        return formatter.format(Date(date))
-    }
-
-    private suspend fun getUserToken(): String? = dataStore.read(KEY_USER_TOKEN)
 }

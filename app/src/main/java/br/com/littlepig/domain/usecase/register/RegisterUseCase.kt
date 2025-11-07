@@ -1,4 +1,4 @@
-package br.com.littlepig.domain.register
+package br.com.littlepig.domain.usecase.register
 
 import android.util.Log
 import br.com.littlepig.data.model.User

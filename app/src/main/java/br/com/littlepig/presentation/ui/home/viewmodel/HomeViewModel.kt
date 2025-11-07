@@ -1,13 +1,11 @@
 package br.com.littlepig.presentation.ui.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.littlepig.data.model.balance.UserBalanceResponseItem
 import br.com.littlepig.di.IoDispatcher
 import br.com.littlepig.domain.exceptions.AppExceptions
-import br.com.littlepig.domain.transactions.ITransactionsUseCase
+import br.com.littlepig.domain.usecase.transactions.ITransactionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -19,55 +17,72 @@ class HomeViewModel @Inject constructor(
     private val useCase: ITransactionsUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _transactions = MutableLiveData<TransactionState>()
-    val transactions: LiveData<TransactionState> = _transactions
+    private val _transactions = MutableLiveData<UIState>()
+    val transactions: LiveData<UIState> = _transactions
+
+    private val _balance = MutableLiveData<UIState>()
+    val balance: LiveData<UIState> = _balance
+
     private val scope = CoroutineScope(dispatcher)
 
     fun loadTransactions(date: Long) {
         scope.launch {
             useCase.invoke(date).fold(
                 onSuccess = { userListBalance ->
-                    Log.d(
-                        "GABRIEL",
-                        "entrei no onSuccess da viewModel, enviando list $userListBalance"
-                    )
-                    _transactions.postValue(TransactionState.Success(userListBalance))
+                    val itemsFiltered = userListBalance.filter { transactions ->
+                        !transactions.tag.contains("saldo")
+                    }
+
+                    _transactions.postValue(UIState.Success(itemsFiltered))
                 },
                 onFailure = { exception ->
-                    Log.d(
-                        "GABRIEL",
-                        "entrei no onFailure da viewModel, enviando exception $exception"
-                    )
                     _transactions.postValue(mapExceptionsToUIState(exception))
                 }
             )
         }
     }
 
-    private fun mapExceptionsToUIState(exception: Throwable): TransactionState {
+    fun loadBalance(date: Long) = runCatching {
+        scope.launch {
+            useCase.invoke(date).fold(
+                onSuccess = { listItems ->
+                    val itemsFiltered = listItems.filter { currentBalance ->
+                        currentBalance.tag.contains("saldo")
+                    }
+
+                    _balance.postValue(UIState.Success(itemsFiltered))
+                },
+                onFailure = { exception ->
+                    _balance.postValue(mapExceptionsToUIState(exception))
+                }
+            )
+        }
+    }
+
+    private fun mapExceptionsToUIState(exception: Throwable): UIState {
         return when (exception) {
             is AppExceptions.EmptyResponseException ->
-                TransactionState.Empty("Nenhuma transação encontrada.")
+                UIState.Empty("Nenhuma transação encontrada.")
 
             is AppExceptions.UnauthorizedException -> {
-                TransactionState.NotAuthenticated
+                UIState.NotAuthenticated
             }
 
             is AppExceptions.TokenNotFound -> {
-                TransactionState.TokenExpired
+                UIState.TokenExpired
             }
 
             else -> {
-                TransactionState.Error(error = exception.message ?: "Erro desconhecido")
+                UIState.Error(error = exception.message ?: "Erro desconhecido")
             }
         }
     }
 
-    sealed class TransactionState {
-        data class Success(val transactions: List<UserBalanceResponseItem>) : TransactionState()
-        data class Error(val error: String) : TransactionState()
-        data class Empty(val message: String) : TransactionState()
-        data object TokenExpired : TransactionState()
-        data object NotAuthenticated : TransactionState()
+    sealed class UIState {
+        data class Success<T>(val data: List<T>) : UIState()
+        data class Error(val error: String) : UIState()
+        data class Empty(val message: String) : UIState()
+        data object TokenExpired : UIState()
+        data object NotAuthenticated : UIState()
     }
 }

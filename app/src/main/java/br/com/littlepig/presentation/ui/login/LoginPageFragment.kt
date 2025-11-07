@@ -59,6 +59,10 @@ class LoginPageFragment : Fragment() {
             when (state) {
                 is LoginViewModel.LoginState.Success -> {
                     context?.showToast("Bem vindo!")
+                    findNavController().navigate(
+                        LoginPageFragmentDirections
+                            .navigateToHomePageFragment()
+                    )
                 }
 
                 is LoginViewModel.LoginState.Failure -> {

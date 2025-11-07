@@ -1,11 +1,11 @@
 package br.com.littlepig.di
 
-import br.com.littlepig.domain.login.ILoginUseCase
-import br.com.littlepig.domain.login.LoginUseCase
-import br.com.littlepig.domain.register.IRegisterUseCase
-import br.com.littlepig.domain.register.RegisterUseCase
-import br.com.littlepig.domain.transactions.ITransactionsUseCase
-import br.com.littlepig.domain.transactions.TransactionsUseCase
+import br.com.littlepig.domain.usecase.login.ILoginUseCase
+import br.com.littlepig.domain.usecase.login.LoginUseCase
+import br.com.littlepig.domain.usecase.register.IRegisterUseCase
+import br.com.littlepig.domain.usecase.register.RegisterUseCase
+import br.com.littlepig.domain.usecase.transactions.ITransactionsUseCase
+import br.com.littlepig.domain.usecase.transactions.TransactionsUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
