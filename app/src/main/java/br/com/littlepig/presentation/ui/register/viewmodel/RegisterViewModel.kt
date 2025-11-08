@@ -24,7 +24,7 @@ class RegisterViewModel @Inject constructor(
 
     fun handleUser(fields: List<String>) {
         scope.launch {
-            _user.value = State.Loading
+            _user.postValue(State.Loading)
 
             useCase.invoke(fields)
                 .fold(

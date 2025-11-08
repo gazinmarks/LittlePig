@@ -1,5 +1,6 @@
 package br.com.littlepig.domain.usecase.login
 
+import androidx.annotation.VisibleForTesting
 import androidx.datastore.preferences.core.stringPreferencesKey
 import br.com.littlepig.data.model.UserLoginRequest
 import br.com.littlepig.data.model.UserLoginResponse
@@ -36,7 +37,8 @@ class LoginUseCase @Inject constructor(
 
     private fun validateIfTokenExists(token: String): Boolean = token.isNotEmpty()
 
-    private companion object {
+    companion object {
+        @VisibleForTesting
         val KEY_USER_TOKEN = stringPreferencesKey("USER_TOKEN")
     }
 }
