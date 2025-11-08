@@ -4,6 +4,7 @@
     android:id="@+id/card_transaction"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardElevation="0dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/calendar">
@@ -12,7 +13,7 @@
         android:id="@+id/container_transaction"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/eighteen_dp_size"
+        android:layout_margin="@dimen/fourteen_dp_size"
         android:background="@drawable/container_rounded_ghost_white">
 
         <com.google.android.material.chip.Chip
@@ -31,6 +32,17 @@
             app:chipIconTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/delete_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ten_dp_size"
+            android:clickable="true"
+            android:src="@drawable/ic_trash"
+            app:layout_constraintBottom_toBottomOf="@+id/type_transaction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/type_transaction" />
 
         <TextView
             android:id="@+id/value_transaction"

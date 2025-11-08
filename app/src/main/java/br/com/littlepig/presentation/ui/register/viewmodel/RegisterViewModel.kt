@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.littlepig.di.IoDispatcher
-import br.com.littlepig.domain.register.IRegisterUseCase
+import br.com.littlepig.domain.usecase.register.IRegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

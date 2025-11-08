@@ -35,7 +35,7 @@ object RetrofitModule {
 
     @Provides
     fun providesGson(): Gson {
-        return GsonBuilder().setLenient().create()
+        return GsonBuilder().setLenient().setDateFormat("dd/MM/yyyy").create()
     }
 
     @Provides

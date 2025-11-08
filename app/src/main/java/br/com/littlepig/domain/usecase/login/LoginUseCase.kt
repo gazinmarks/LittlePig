@@ -1,4 +1,4 @@
-package br.com.littlepig.domain.login
+package br.com.littlepig.domain.usecase.login
 
 import androidx.annotation.VisibleForTesting
 import androidx.datastore.preferences.core.stringPreferencesKey

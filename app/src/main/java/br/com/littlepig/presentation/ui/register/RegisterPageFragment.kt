@@ -30,14 +30,9 @@ class RegisterPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        configureToolbar()
         setListeners()
         createAccount()
         updateUI()
-    }
-
-    private fun configureToolbar() {
-        (activity as MainActivity).findViewById<Toolbar>(R.id.toolbar).visibility = View.GONE
     }
 
     private fun setListeners() = with(binding) {
