@@ -1,4 +1,4 @@
-package br.com.littlepig.domain.usecase.transactions
+package br.com.littlepig.domain.usecase.balance
 
 import android.util.Log
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
@@ -10,10 +10,10 @@ import br.com.littlepig.utils.dateFormat
 import br.com.littlepig.utils.getUserToken
 import javax.inject.Inject
 
-class TransactionsUseCase @Inject constructor(
+class BalanceUseCase @Inject constructor(
     private val repository: IUserRepository,
     private val dataStore: DataStorePreferencesManager
-) : ITransactionsUseCase {
+) : IBalanceUseCase {
     override suspend fun invoke(date: Long): Result<List<UserBalanceResponseItem>> {
         return runCatching {
             val formattedDate = date.dateFormat()
