@@ -12,4 +12,8 @@
     <string name="current_balance">Saldo atual</string>
     <string name="today_entries">Entradas de hoje</string>
     <string name="today_outings">Saídas de hoje</string>
+    <string name="attention">Atenção</string>
+    <string name="ensure_delete">Você tem certeza que deseja deletar esse registro?</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="button_confirm">Confirmar</string>
 </resources>

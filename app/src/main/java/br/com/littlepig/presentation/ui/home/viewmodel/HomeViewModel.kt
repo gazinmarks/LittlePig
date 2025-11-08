@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.littlepig.di.IoDispatcher
 import br.com.littlepig.domain.exceptions.AppExceptions
-import br.com.littlepig.domain.usecase.transactions.ITransactionsUseCase
+import br.com.littlepig.domain.usecase.balance.IBalanceUseCase
+import br.com.littlepig.domain.usecase.transactions.IDeleteTransactionUseCase
+import br.com.littlepig.domain.usecase.transactions.IGetTransactionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -14,26 +16,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCase: ITransactionsUseCase,
+    private val balanceUseCase: IBalanceUseCase,
+    private val transactionsUseCase: IGetTransactionsUseCase,
+    private val deleteUseCase: IDeleteTransactionUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _transactions = MutableLiveData<UIState>()
+    private val _transactions = MutableLiveData<UIState>() // TODO ver maneira de observar apenas um livedata
     val transactions: LiveData<UIState> = _transactions
 
     private val _balance = MutableLiveData<UIState>()
     val balance: LiveData<UIState> = _balance
 
+    private val _deleteTransaction = MutableLiveData<UIState>()
+    val deleteTransaction: LiveData<UIState> = _deleteTransaction
+
     private val scope = CoroutineScope(dispatcher)
 
     fun loadTransactions(date: Long) {
         scope.launch {
-            useCase.invoke(date).fold(
+            transactionsUseCase.invoke(date).fold(
                 onSuccess = { userListBalance ->
-                    val itemsFiltered = userListBalance.filter { transactions ->
-                        !transactions.tag.contains("saldo")
-                    }
-
-                    _transactions.postValue(UIState.Success(itemsFiltered))
+                    _transactions.postValue(UIState.Success(userListBalance))
                 },
                 onFailure = { exception ->
                     _transactions.postValue(mapExceptionsToUIState(exception))
@@ -44,16 +47,25 @@ class HomeViewModel @Inject constructor(
 
     fun loadBalance(date: Long) = runCatching {
         scope.launch {
-            useCase.invoke(date).fold(
+            balanceUseCase.invoke(date).fold(
                 onSuccess = { listItems ->
-                    val itemsFiltered = listItems.filter { currentBalance ->
-                        currentBalance.tag.contains("saldo")
-                    }
-
-                    _balance.postValue(UIState.Success(itemsFiltered))
+                    _balance.postValue(UIState.Success(listItems))
                 },
                 onFailure = { exception ->
                     _balance.postValue(mapExceptionsToUIState(exception))
+                }
+            )
+        }
+    }
+
+    fun deleteTransactionById(id: String) {
+        scope.launch {
+            deleteUseCase.invoke(id).fold(
+                onSuccess = {
+                    _deleteTransaction.postValue(UIState.Success(it.status))
+                },
+                onFailure = {
+                    _deleteTransaction.postValue(mapExceptionsToUIState(it))
                 }
             )
         }
@@ -79,7 +91,7 @@ class HomeViewModel @Inject constructor(
     }
 
     sealed class UIState {
-        data class Success<T>(val data: List<T>) : UIState()
+        data class Success<T>(val data: T) : UIState()
         data class Error(val error: String) : UIState()
         data class Empty(val message: String) : UIState()
         data object TokenExpired : UIState()

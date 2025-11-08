@@ -6,14 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.littlepig.R
-import br.com.littlepig.data.model.balance.UserBalanceResponseItem
+import br.com.littlepig.data.model.balance.Balance
 import br.com.littlepig.databinding.CardViewTransactionBinding
 import br.com.littlepig.utils.formatCurrency
 
-class TransactionAdapter :
-    ListAdapter<UserBalanceResponseItem, TransactionAdapter.TransactionAdapterViewHolder>(
-        DiffCallback
-    ) {
+class TransactionAdapter(
+    val onClick: (String) -> Unit
+) : ListAdapter<Balance, TransactionAdapter.TransactionAdapterViewHolder>(
+    DiffCallback
+) {
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
     ): TransactionAdapterViewHolder {
@@ -28,33 +29,38 @@ class TransactionAdapter :
         holder.bind(item)
     }
 
-    class TransactionAdapterViewHolder(
+    inner class TransactionAdapterViewHolder(
         private val binding: CardViewTransactionBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(balance: UserBalanceResponseItem) = with(binding) {
+        fun bind(balance: Balance) = with(binding) {
             typeTransaction.apply {
-                when (balance.tag == TAG_RECEIPT) {
+                when (balance.type == TAG_RECEIPT) {
                     true -> {
                         setChipBackgroundColorResource(R.color.green)
                         setChipIconResource(R.drawable.ic_arrow_up)
                     }
 
-                    false -> setChipBackgroundColorResource(R.color.red)
+                    false -> {
+                        setChipBackgroundColorResource(R.color.red)
+                        setChipIconResource(R.drawable.ic_arrow_down)
+                    }
                 }
-                text = balance.tag
+                text = balance.type
             }
-            valueTransaction.text = balance.saldo.formatCurrency()
+            valueTransaction.text = balance.value.formatCurrency()
+            deleteTransaction.setOnClickListener {
+                onClick(balance.id)
+            }
         }
     }
 
-    object DiffCallback : DiffUtil.ItemCallback<UserBalanceResponseItem>() {
+    object DiffCallback : DiffUtil.ItemCallback<Balance>() {
         override fun areItemsTheSame(
-            oldItem: UserBalanceResponseItem, newItem: UserBalanceResponseItem
+            oldItem: Balance, newItem: Balance
         ): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(
-            oldItem: UserBalanceResponseItem, newItem: UserBalanceResponseItem
+            oldItem: Balance, newItem: Balance
         ): Boolean = oldItem == newItem
     }
 

@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import br.com.littlepig.R
+import br.com.littlepig.data.model.balance.Balance
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
 import br.com.littlepig.databinding.HomePageFragmentBinding
 import br.com.littlepig.presentation.adapter.BalanceAdapter
 import br.com.littlepig.presentation.adapter.TransactionAdapter
 import br.com.littlepig.presentation.main.MainActivity
+import br.com.littlepig.presentation.ui.home.dialog.ConfirmDialog
 import br.com.littlepig.presentation.ui.home.viewmodel.HomeViewModel
 import br.com.littlepig.presentation.ui.home.viewmodel.HomeViewModel.UIState
 import br.com.littlepig.utils.showToast
@@ -28,7 +30,11 @@ class HomePageFragment : Fragment() {
     }
     private val viewModel: HomeViewModel by viewModels()
     private val transactionAdapter by lazy {
-        TransactionAdapter()
+        TransactionAdapter { transactionId ->
+            ConfirmDialog {
+                viewModel.deleteTransactionById(transactionId)
+            }.show(parentFragmentManager, TAG_DIALOG)
+        }
     }
     private val balanceAdapter by lazy {
         BalanceAdapter()
@@ -47,14 +53,11 @@ class HomePageFragment : Fragment() {
         configureToolbar()
         setRecyclerViews()
         setCalendarListener()
+        loadCurrentBalance()
+        loadTransactions()
         updateUIBalance()
         updateUITransactions()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadCurrentBalance() // TODO regra para nao recarregar sempre
-        loadCurrentDayTransactions() // TODO regra para nao recarregar sempre
+        updateUIAfterDelete()
     }
 
     private fun configureToolbar() {
@@ -64,6 +67,7 @@ class HomePageFragment : Fragment() {
     private fun setRecyclerViews() = with(binding) {
         recycler.run {
             adapter = balanceAdapter
+            itemAnimator = null
             setHasFixedSize(true)
         }
 
@@ -97,7 +101,7 @@ class HomePageFragment : Fragment() {
         viewModel.loadBalance(getCurrentDate())
     }
 
-    private fun loadCurrentDayTransactions() {
+    private fun loadTransactions() {
         viewModel.loadTransactions(getCurrentDate())
     }
 
@@ -109,7 +113,7 @@ class HomePageFragment : Fragment() {
                 is UIState.Success<*> -> {
                     Log.d("log", "transactionsAdapter: ${state.data}")
                     @Suppress("UNCHECKED_CAST")
-                    transactionAdapter.submitList(state.data as? List<UserBalanceResponseItem>) //TODO consultar melhoria para nao usar cast
+                    transactionAdapter.submitList(state.data as MutableList<Balance>) //TODO consultar melhoria para nao usar cast
                 }
 
                 is UIState.Empty -> {
@@ -143,7 +147,7 @@ class HomePageFragment : Fragment() {
                 is UIState.Success<*> -> {
                     Log.d("log", "balanceAdapter: ${state.data}")
                     @Suppress("UNCHECKED_CAST")
-                    balanceAdapter.submitList(state.data as? List<UserBalanceResponseItem>)//TODO consultar melhoria para nao usar cast
+                    balanceAdapter.submitList(state.data as MutableList<UserBalanceResponseItem>?)//TODO consultar melhoria para nao usar cast
                 }
 
                 is UIState.Empty -> {
@@ -171,8 +175,25 @@ class HomePageFragment : Fragment() {
         }
     }
 
+    private fun updateUIAfterDelete() {
+        viewModel.deleteTransaction.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UIState.Success<*> -> {
+                    loadTransactions()
+                    loadCurrentBalance() //TODO ver questao do scroll da recycler perdendo o estado
+                }
+
+                is UIState.Empty -> {}
+                is UIState.Error -> {}
+                UIState.NotAuthenticated -> {}
+                UIState.TokenExpired -> {}
+            }
+        }
+    }
+
     private companion object {
         const val SELECT_DATE = "Selecione a data"
         const val TAG_DATE_PICKER = "DATE_PICKER"
+        const val TAG_DIALOG = "CONFIRM_DIALOG"
     }
 }

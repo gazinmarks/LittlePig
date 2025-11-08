@@ -4,8 +4,8 @@
     android:id="@+id/card_transaction"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="parent"
     app:cardElevation="0dp"
+    app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/calendar">
 
@@ -32,6 +32,17 @@
             app:chipIconTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/delete_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ten_dp_size"
+            android:clickable="true"
+            android:src="@drawable/ic_trash"
+            app:layout_constraintBottom_toBottomOf="@+id/type_transaction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/type_transaction" />
 
         <TextView
             android:id="@+id/value_transaction"
