@@ -46,7 +46,7 @@ android {
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
-    jacoco {
+    testCoverage {
         version = "0.8.11"
     }
     tasks.register<JacocoReport>("jacocoTestReport") {
@@ -63,13 +63,13 @@ android {
             "**/*Test*.*"
         )
 
-        val debugTree = fileTree("${buildDir}/tmp/kotlin-classes/debug") {
+        val debugTree = fileTree("${layout.buildDirectory}/tmp/kotlin-classes/debug") {
             exclude(fileFilter)
         }
 
         classDirectories.setFrom(files(debugTree))
         sourceDirectories.setFrom(files("src/main/java", "src/main/kotlin"))
-        executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
+        executionData.setFrom(fileTree(layout.buildDirectory).include("jacoco/testDebugUnitTest.exec"))
     }
 }
 
@@ -90,7 +90,7 @@ dependencies {
     implementation(libs.coroutines.core)
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
-    testImplementation("io.mockk:mockk:1.13.3")
+    testImplementation(libs.mockk)
     testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
