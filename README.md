@@ -23,10 +23,7 @@ git clone https://gitlab.com/DevRafaelSa/uniesp-financas-backend
 
 ## ⚙️ 2. Configure e inicie a API
 
-Dentro da pasta da API:
-
-# Gera o client do Prisma
-npx prisma generate
+Dentro da pasta da API: npm install
 
 # Roda as migrations e sobe o banco
 npx prisma migrate dev
