@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/light_gray">
 
     <Toolbar
         android:id="@+id/toolbar_register"
@@ -42,10 +42,13 @@
     <EditText
         android:id="@+id/field_username"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fifty_dp_size"
         android:layout_marginHorizontal="@dimen/thirty_dp_size"
         android:layout_marginBottom="@dimen/fifteen_dp_size"
+        android:background="@drawable/edit_text_container"
+        android:backgroundTint="@color/white"
         android:hint="@string/hint_username"
+        android:paddingStart="@dimen/ten_dp_size"
         app:layout_constraintBottom_toTopOf="@id/field_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,10 +58,13 @@
     <EditText
         android:id="@+id/field_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fifty_dp_size"
         android:layout_marginHorizontal="@dimen/thirty_dp_size"
         android:layout_marginTop="@dimen/fifteen_dp_size"
+        android:background="@drawable/edit_text_container"
+        android:backgroundTint="@color/white"
         android:hint="@string/hint_email"
+        android:paddingStart="@dimen/ten_dp_size"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -66,21 +72,25 @@
     <EditText
         android:id="@+id/field_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fifty_dp_size"
         android:layout_marginHorizontal="@dimen/thirty_dp_size"
         android:layout_marginTop="@dimen/fifteen_dp_size"
+        android:background="@drawable/edit_text_container"
+        android:backgroundTint="@color/white"
         android:hint="@string/hint_password"
+        android:paddingStart="@dimen/ten_dp_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/field_email" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/thirty_dp_size"
         android:layout_marginTop="@dimen/fifteen_dp_size"
         android:clickable="true"
+        android:background="@drawable/main_button_selector"
         android:focusable="true"
         android:text="@string/text_button_register"
         android:textColor="@android:color/white"

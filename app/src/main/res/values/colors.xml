@@ -6,4 +6,6 @@
     <color name="ghost_white">#F0F3FF</color>
     <color name="green">#00B94A</color>
     <color name="red">#EF463A</color>
+    <color name="gray">#E7E7E7</color>
+    <color name="light_gray">#F0F4FF</color>
 </resources>
