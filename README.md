@@ -203,5 +203,5 @@ Os testes unitários do `RegisterUseCase` asseguram que o fluxo de cadastro de u
     - Outras falhas da API
 
 ---
-![Cobertura de Login](../../docs/loginUseCaseKT-report.png)
-![Cobertura de Registro](../../docs/registerUseCaseKT-report.png)
+![Cobertura de Login](app/docs/loginUseCaseKT-report.png)
+![Cobertura de Registro](app/docs/registerUseCaseKT-report.png)
