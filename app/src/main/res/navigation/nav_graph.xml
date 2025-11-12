@@ -35,4 +35,13 @@
             android:id="@+id/navigate_to_loginPageFragment"
             app:destination="@id/loginPageFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/createTransactionPageFragment"
+        tools:layout="@layout/create_transaction_fragment"
+        android:name="br.com.littlepig.presentation.ui.transactions.CreateTransactionPageFragment"
+        android:label="CreateTransactionPageFragment" >
+        <action
+            android:id="@+id/navigate_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+    </fragment>
 </navigation>

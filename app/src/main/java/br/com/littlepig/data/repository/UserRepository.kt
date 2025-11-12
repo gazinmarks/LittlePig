@@ -7,6 +7,7 @@ import br.com.littlepig.data.model.UserLoginResponse
 import br.com.littlepig.data.model.UserRegisterRequest
 import br.com.littlepig.data.model.balance.Balance
 import br.com.littlepig.data.model.balance.DeleteResponse
+import br.com.littlepig.data.model.balance.TransactionRequest
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
 import retrofit2.Response
 import javax.inject.Inject
@@ -35,4 +36,13 @@ class UserRepository @Inject constructor(
         token: String
     ): Response<DeleteResponse> =
         service.deleteTransaction(id, token)
+
+    override suspend fun createTransaction(
+        transactionRequest: TransactionRequest,
+        token: String
+    ): Response<Balance> =
+        service.createTransaction(
+            transactionRequest,
+            token
+        )
 }

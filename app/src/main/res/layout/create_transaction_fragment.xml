@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fifteen_dp_size"
+        android:layout_marginTop="@dimen/six_hundred_dp_size"
+        android:fontFamily="@font/roboto_semi_bold"
+        android:text="@string/register"
+        android:textColor="@color/black"
+        android:textSize="@dimen/twenty_four_sp_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <EditText
+        android:id="@+id/name_transaction_field"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fifty_dp_size"
+        android:layout_marginHorizontal="@dimen/fifteen_dp_size"
+        android:layout_marginTop="@dimen/eighteen_dp_size"
+        android:background="@drawable/edit_text_container"
+        android:backgroundTint="@color/white"
+        android:hint="@string/name"
+        android:paddingStart="@dimen/ten_dp_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_register" />
+
+    <EditText
+        android:id="@+id/value_transaction_field"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fifty_dp_size"
+        android:layout_marginHorizontal="@dimen/fifteen_dp_size"
+        android:layout_marginTop="@dimen/eighteen_dp_size"
+        android:background="@drawable/edit_text_container"
+        android:backgroundTint="@color/white"
+        android:hint="@string/value_desired"
+        android:paddingStart="@dimen/ten_dp_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_transaction_field" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/receipt_button"
+        style="@style/toggle_button_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fifteen_dp_size"
+        android:layout_marginEnd="@dimen/ten_dp_size"
+        android:text="@string/receipt"
+        android:textSize="@dimen/eighteen_sp_size"
+        app:icon="@drawable/ic_arrow_up"
+        app:layout_constraintEnd_toEndOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/value_transaction_field"
+        app:layout_constraintTop_toBottomOf="@+id/value_transaction_field" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/expense_button"
+        style="@style/toggle_button_style"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/ten_dp_size"
+        android:layout_marginTop="@dimen/fifteen_dp_size"
+        android:text="@string/expense"
+        app:icon="@drawable/ic_arrow_down"
+        app:layout_constraintEnd_toEndOf="@+id/value_transaction_field"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/value_transaction_field" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/create_transaction_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/eighteen_dp_size"
+        android:backgroundTint="@color/green"
+        android:clickable="true"
+        android:text="@string/register"
+        android:textSize="@dimen/eighteen_sp_size"
+        app:cornerRadius="@dimen/four_dp_size"
+        app:layout_constraintEnd_toEndOf="@id/expense_button"
+        app:layout_constraintStart_toStartOf="@+id/receipt_button"
+        app:layout_constraintTop_toBottomOf="@+id/receipt_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

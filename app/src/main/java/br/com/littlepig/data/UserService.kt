@@ -6,6 +6,7 @@ import br.com.littlepig.data.model.UserLoginResponse
 import br.com.littlepig.data.model.UserRegisterRequest
 import br.com.littlepig.data.model.balance.Balance
 import br.com.littlepig.data.model.balance.DeleteResponse
+import br.com.littlepig.data.model.balance.TransactionRequest
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
 import retrofit2.Response
 import retrofit2.http.Body
@@ -13,8 +14,8 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
-import retrofit2.http.Path
 import retrofit2.http.Query
+import java.math.BigDecimal
 
 interface UserService {
     @POST("/users")
@@ -40,4 +41,10 @@ interface UserService {
         @Query("item_id") id: String,
         @Header("Authorization") token: String
     ): Response<DeleteResponse>
+
+    @POST("/receive")
+    suspend fun createTransaction(
+        @Body transactionRequest: TransactionRequest,
+        @Header("Authorization") token: String
+    ): Response<Balance>
 }

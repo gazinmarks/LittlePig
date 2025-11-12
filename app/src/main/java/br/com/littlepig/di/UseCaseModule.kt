@@ -6,8 +6,10 @@ import br.com.littlepig.domain.usecase.login.ILoginUseCase
 import br.com.littlepig.domain.usecase.login.LoginUseCase
 import br.com.littlepig.domain.usecase.register.IRegisterUseCase
 import br.com.littlepig.domain.usecase.register.RegisterUseCase
+import br.com.littlepig.domain.usecase.transactions.CreateTransactionUseCase
 import br.com.littlepig.domain.usecase.transactions.DeleteTransactionUseCase
 import br.com.littlepig.domain.usecase.transactions.GetTransactionsUseCase
+import br.com.littlepig.domain.usecase.transactions.ICreateTransactionUseCase
 import br.com.littlepig.domain.usecase.transactions.IDeleteTransactionUseCase
 import br.com.littlepig.domain.usecase.transactions.IGetTransactionsUseCase
 import dagger.Binds
@@ -32,4 +34,7 @@ interface UseCaseModule {
 
     @Binds
     fun provideDeleteTransactionUseCase(deleteTransactionUseCase: DeleteTransactionUseCase): IDeleteTransactionUseCase
+
+    @Binds
+    fun provideCreateTransactionUseCase(createTransactionUseCase: CreateTransactionUseCase): ICreateTransactionUseCase
 }

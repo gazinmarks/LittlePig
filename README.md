@@ -23,10 +23,7 @@ git clone https://gitlab.com/DevRafaelSa/uniesp-financas-backend
 
 ## ⚙️ 2. Configure e inicie a API
 
-Dentro da pasta da API:
-
-# Gera o client do Prisma
-npx prisma generate
+Dentro da pasta da API: npm install
 
 # Roda as migrations e sobe o banco
 npx prisma migrate dev
@@ -203,5 +200,5 @@ Os testes unitários do `RegisterUseCase` asseguram que o fluxo de cadastro de u
     - Outras falhas da API
 
 ---
-![Cobertura de Login](../../docs/loginUseCaseKT-report.png)
-![Cobertura de Registro](../../docs/registerUseCaseKT-report.png)
+![Cobertura de Login](app/docs/loginUseCaseKT-report.png)
+![Cobertura de Registro](app/docs/registerUseCaseKT-report.png)

@@ -16,4 +16,12 @@
     <string name="ensure_delete">Você tem certeza que deseja deletar esse registro?</string>
     <string name="button_cancel">Cancelar</string>
     <string name="button_confirm">Confirmar</string>
+    <string name="drawer_open">Abrir</string>
+    <string name="drawer_close">Fechar</string>
+    <string name="welcome">Bem-vindo</string>
+    <string name="name">Nome</string>
+    <string name="value_desired">Valor desejado</string>
+    <string name="receipt">Receita</string>
+    <string name="expense">Despesa</string>
+    <string name="register">Registrar</string>
 </resources>

@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/light_gray">
 
     <ImageView
         android:id="@+id/icon_logo"
@@ -18,11 +18,14 @@
     <EditText
         android:id="@+id/field_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
+        android:layout_height="@dimen/fifty_dp_size"
+        android:layout_marginHorizontal="@dimen/thirty_dp_size"
         android:layout_marginTop="@dimen/six_hundred_dp_size"
-        android:text="email2@email.com"
+        android:background="@drawable/edit_text_container"
+        android:backgroundTint="@color/white"
         android:hint="@string/hint_email"
+        android:paddingStart="@dimen/ten_dp_size"
+        android:text="email2@email.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/icon_logo" />
@@ -30,23 +33,27 @@
     <EditText
         android:id="@+id/field_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:text="senha1234"
+        android:layout_height="@dimen/fifty_dp_size"
+        android:layout_marginHorizontal="@dimen/thirty_dp_size"
         android:layout_marginTop="@dimen/fifteen_dp_size"
+        android:background="@drawable/edit_text_container"
+        android:backgroundTint="@color/white"
         android:hint="@string/hint_password"
+        android:paddingStart="@dimen/ten_dp_size"
+        android:text="senha1234"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/field_email" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
+        android:layout_marginHorizontal="@dimen/thirty_dp_size"
         android:layout_marginTop="@dimen/fifteen_dp_size"
-        android:background="@color/blue"
+        android:backgroundTint="@color/blue"
         android:clickable="true"
+        android:background="@drawable/main_button_selector"
         android:focusable="true"
         android:text="@string/text_button_login"
         android:textColor="@android:color/white"

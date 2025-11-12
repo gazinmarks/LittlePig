@@ -14,8 +14,8 @@
 
         <include
             android:id="@+id/toolbar"
-            android:fitsSystemWindows="true"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar"
+            android:fitsSystemWindows="true" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment_container"
@@ -30,5 +30,14 @@
             app:navGraph="@navigation/nav_graph" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/drawer_window"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/drawer_header_layout"
+        android:layout_marginEnd="@dimen/one_hundred_dp_size"
+        android:layout_gravity="start"
+        app:menu="@menu/menu_header" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
