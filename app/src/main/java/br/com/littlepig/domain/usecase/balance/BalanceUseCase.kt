@@ -2,8 +2,8 @@ package br.com.littlepig.domain.usecase.balance
 
 import android.util.Log
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
-import br.com.littlepig.data.repository.IUserRepository
-import br.com.littlepig.domain.exceptions.AppExceptions
+import br.com.littlepig.data.repository.user.IUserRepository
+import br.com.littlepig.domain.AppExceptions
 import br.com.littlepig.preferences.DataStorePreferencesManager
 import br.com.littlepig.utils.Commons.LOG_TAG
 import br.com.littlepig.utils.dateFormat

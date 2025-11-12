@@ -24,4 +24,17 @@
     <string name="receipt">Receita</string>
     <string name="expense">Despesa</string>
     <string name="register">Registrar</string>
+
+    <!-- Error messages-->
+    <string name="error_unauthorized">Você não tem permissão para esta operação</string>
+    <string name="error_not_found">Recurso não encontrado</string>
+    <string name="error_empty_response">Nenhum dado disponível</string>
+    <string name="error_session_expired">Sessão expirada. Faça login novamente</string>
+    <string name="error_generic">Ocorreu um erro inesperado</string>
+    <string name="error_invalid_data">Dados inválidos. Verifique as informações</string>
+    <string name="error_network">Erro de conexão. Verifique sua internet</string>
+    <string name="error_token_not_found">Token não encontrado</string>
+    <string name="empty_transaction_date">Campo \"data\" está vazio. Por favor, preencha</string>
+    <string name="empty_transaction_description">Descrição da transação está vazio. Por favor, preencha</string>
+    <string name="no_transaction_value">Valor da transação está vazio. Por favor, preencha</string>
 </resources>

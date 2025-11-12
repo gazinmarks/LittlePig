@@ -4,7 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.datastore.preferences.core.stringPreferencesKey
 import br.com.littlepig.data.model.UserLoginRequest
 import br.com.littlepig.data.model.UserLoginResponse
-import br.com.littlepig.data.repository.IUserRepository
+import br.com.littlepig.data.repository.user.IUserRepository
 import br.com.littlepig.preferences.IDataStorePreferences
 import br.com.littlepig.utils.isFieldsInvalid
 import javax.inject.Inject

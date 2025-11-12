@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import br.com.littlepig.R
 import br.com.littlepig.data.model.balance.Balance
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
@@ -98,7 +97,7 @@ class HomePageFragment : Fragment() {
     private fun getTransactions(date: Long) = viewModel.loadTransactions(date)
 
     private fun loadCurrentBalance() {
-        viewModel.loadBalance(getCurrentDate())
+//        viewModel.loadBalance(getCurrentDate())
     }
 
     private fun loadTransactions() {
@@ -116,26 +115,10 @@ class HomePageFragment : Fragment() {
                     transactionAdapter.submitList(state.data as MutableList<Balance>) //TODO consultar melhoria para nao usar cast
                 }
 
-                is UIState.Empty -> {
-                    context?.showToast(state.message)
-                }
-
                 is UIState.Error -> {
-                    context?.showToast(state.error)
-                }
-
-                UIState.NotAuthenticated -> {
-                    findNavController().navigate(
-                        HomePageFragmentDirections
-                            .navigateToLoginPageFragment()
-                    )
-                }
-
-                UIState.TokenExpired -> {
-                    findNavController().navigate(
-                        HomePageFragmentDirections
-                            .navigateToLoginPageFragment()
-                    )
+                    context?.let {
+                        it.showToast(state.error.asString(it))
+                    }
                 }
             }
         }
@@ -150,26 +133,10 @@ class HomePageFragment : Fragment() {
                     balanceAdapter.submitList(state.data as MutableList<UserBalanceResponseItem>?)//TODO consultar melhoria para nao usar cast
                 }
 
-                is UIState.Empty -> {
-                    context?.showToast(state.message)
-                }
-
                 is UIState.Error -> {
-                    context?.showToast(state.error)
-                }
-
-                UIState.NotAuthenticated -> {
-                    findNavController().navigate(
-                        HomePageFragmentDirections
-                            .navigateToLoginPageFragment()
-                    )
-                }
-
-                UIState.TokenExpired -> {
-                    findNavController().navigate(
-                        HomePageFragmentDirections
-                            .navigateToLoginPageFragment()
-                    )
+                    context?.let {
+                        it.showToast(state.error.asString(it))
+                    }
                 }
             }
         }
@@ -183,10 +150,11 @@ class HomePageFragment : Fragment() {
                     loadCurrentBalance() //TODO ver questao do scroll da recycler perdendo o estado
                 }
 
-                is UIState.Empty -> {}
-                is UIState.Error -> {}
-                UIState.NotAuthenticated -> {}
-                UIState.TokenExpired -> {}
+                is UIState.Error -> {
+                    context?.let {
+                        it.showToast(state.error.asString(it))
+                    }
+                }
             }
         }
     }

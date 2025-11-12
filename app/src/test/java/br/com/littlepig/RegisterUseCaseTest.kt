@@ -2,7 +2,7 @@ package br.com.littlepig
 
 import android.util.Log
 import br.com.littlepig.data.model.User
-import br.com.littlepig.data.repository.IUserRepository
+import br.com.littlepig.data.repository.user.IUserRepository
 import br.com.littlepig.domain.register.RegisterUseCase
 import io.mockk.coEvery
 import io.mockk.every

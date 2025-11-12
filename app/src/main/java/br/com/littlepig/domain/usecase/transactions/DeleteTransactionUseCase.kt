@@ -1,36 +1,31 @@
 package br.com.littlepig.domain.usecase.transactions
 
-import android.util.Log
+import br.com.littlepig.common.Result
+import br.com.littlepig.common.mapError
+import br.com.littlepig.common.mapToDomainErrors
 import br.com.littlepig.data.model.balance.DeleteResponse
-import br.com.littlepig.data.repository.IUserRepository
-import br.com.littlepig.domain.exceptions.AppExceptions
+import br.com.littlepig.data.repository.transaction.ITransactionRepository
+import br.com.littlepig.domain.enums.DomainError
 import br.com.littlepig.preferences.IDataStorePreferences
 import br.com.littlepig.utils.Commons.KEY_USER_TOKEN
 import javax.inject.Inject
 
 class DeleteTransactionUseCase @Inject constructor(
-    private val repository: IUserRepository,
+    private val repository: ITransactionRepository,
     private val dataStore: IDataStorePreferences
 ) : IDeleteTransactionUseCase {
-    override suspend fun invoke(id: String): Result<DeleteResponse> = runCatching {
+    override suspend fun invoke(id: String): Result<DeleteResponse, DomainError> {
         val token =
-            dataStore.read(KEY_USER_TOKEN) ?: throw AppExceptions.TokenNotFound("Token not found")
+            dataStore.read(KEY_USER_TOKEN) ?: return Result.Error(DomainError.TOKEN_NOT_FOUND)
 
-        val response = repository.deleteTransaction(id, "Bearer $token")
-
-        when {
-            response.isSuccessful -> {
-                response.body()
-                    ?: throw AppExceptions.Error("Erro ${response.code()} - ${response.body()}")
-            }
-
-            else -> {
-                throw AppExceptions.UnknownException("")
-            }
+        if (id.isBlank()) {
+            return Result.Error(DomainError.INVALID_FORMAT)
         }
-    }.onSuccess {
-        Log.d("log", "sucesso delete $it")
-    }.onFailure {
-        Log.d("log", "erro delete $it")
+
+        val result = repository.deleteTransaction(id, "Bearer $token")
+
+        return result.mapError { networkError ->
+            mapToDomainErrors(networkError)
+        }
     }
 }

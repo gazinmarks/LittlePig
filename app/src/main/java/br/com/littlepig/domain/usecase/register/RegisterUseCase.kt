@@ -3,7 +3,7 @@ package br.com.littlepig.domain.usecase.register
 import android.util.Log
 import br.com.littlepig.data.model.User
 import br.com.littlepig.data.model.UserRegisterRequest
-import br.com.littlepig.data.repository.IUserRepository
+import br.com.littlepig.data.repository.user.IUserRepository
 import br.com.littlepig.utils.isFieldsInvalid
 import javax.inject.Inject
 

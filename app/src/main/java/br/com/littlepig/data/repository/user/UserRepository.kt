@@ -1,4 +1,4 @@
-package br.com.littlepig.data.repository
+package br.com.littlepig.data.repository.user
 
 import br.com.littlepig.data.UserService
 import br.com.littlepig.data.model.User
@@ -24,25 +24,4 @@ class UserRepository @Inject constructor(
         token: String
     ): Response<List<UserBalanceResponseItem>> =
         service.getUserBalance(date, token)
-
-    override suspend fun getAllTransactions(
-        date: String,
-        token: String
-    ): Response<List<Balance>> =
-        service.getAllTransactions(date, token)
-
-    override suspend fun deleteTransaction(
-        id: String,
-        token: String
-    ): Response<DeleteResponse> =
-        service.deleteTransaction(id, token)
-
-    override suspend fun createTransaction(
-        transactionRequest: TransactionRequest,
-        token: String
-    ): Response<Balance> =
-        service.createTransaction(
-            transactionRequest,
-            token
-        )
 }

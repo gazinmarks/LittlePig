@@ -1,7 +1,6 @@
 package br.com.littlepig.presentation.ui.transactions
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,7 +52,7 @@ class CreateTransactionPageFragment : Fragment() {
 
     private fun createNewTransaction() = with(binding) {
         val description = nameTransactionField.text.toString()
-        val value = BigDecimal(valueTransactionField.text.toString())
+        val value = valueTransactionField.text.toString()
         val type = if (receiptButton.isChecked) {
             receiptButton.text
         } else {
@@ -73,9 +72,10 @@ class CreateTransactionPageFragment : Fragment() {
                 }
 
                 is CreateTransactionViewModel.State.Error -> {
-                    context?.showToast("${state.exception}")
-                    Log.d("log", "${state.exception}")
+                    context?.showToast(state.message.asString(requireContext()))
                 }
+
+                is CreateTransactionViewModel.State.ValueEmpty -> TODO()
             }
         }
     }
