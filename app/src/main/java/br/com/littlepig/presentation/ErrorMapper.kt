@@ -19,6 +19,7 @@ object ErrorMapper {
                 DomainError.NO_TRANSACTION_VALUE -> StringResource(R.string.no_transaction_value)
                 DomainError.EMPTY_TRANSACTION_DESCRIPTION -> StringResource(R.string.empty_transaction_description)
                 DomainError.EMPTY_TRANSACTION_DATE -> StringResource(R.string.empty_transaction_date)
+                DomainError.FIELD_INVALID -> StringResource(R.string.field_invalid)
             }
             else -> StringResource(R.string.error_generic)
         }

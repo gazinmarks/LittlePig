@@ -11,5 +11,6 @@ enum class DomainError : Error {
     INVALID_FORMAT,
     EMPTY_RESPONSE,
     RESOURCE_NOT_FOUND,
-    UNKNOWN
+    UNKNOWN,
+    FIELD_INVALID
 }
