@@ -1,6 +1,7 @@
 package br.com.littlepig.data.repository.transaction
 
 import br.com.littlepig.common.Result
+import br.com.littlepig.common.asResultError
 import br.com.littlepig.data.UserService
 import br.com.littlepig.data.enums.NetworkError
 import br.com.littlepig.data.model.balance.Balance
@@ -54,19 +55,6 @@ class TransactionRepository @Inject constructor(
             } ?: Result.Error(NetworkError.EMPTY_RESPONSE)
         } catch (error: HttpException) {
             error.asResultError()
-        }
-    }
-
-
-    private fun HttpException.asResultError(): Result<Nothing, NetworkError> {
-        return when (this.code()) {
-            400 -> Result.Error(NetworkError.BAD_REQUEST)
-
-            401 -> Result.Error(NetworkError.UNAUTHORIZED)
-
-            404 -> Result.Error(NetworkError.NOT_FOUND)
-
-            else -> Result.Error(NetworkError.UNKNOWN)
         }
     }
 }

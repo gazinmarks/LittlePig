@@ -24,6 +24,8 @@
     <string name="receipt">Receita</string>
     <string name="expense">Despesa</string>
     <string name="register">Registrar</string>
+    <string name="create_successfully">Criado com sucesso!</string>
+    <string name="required_field">Campo obrigatório</string>
 
     <!-- Error messages-->
     <string name="error_unauthorized">Você não tem permissão para esta operação</string>
@@ -37,4 +39,5 @@
     <string name="empty_transaction_date">Campo \"data\" está vazio. Por favor, preencha</string>
     <string name="empty_transaction_description">Descrição da transação está vazio. Por favor, preencha</string>
     <string name="no_transaction_value">Valor da transação está vazio. Por favor, preencha</string>
+    <string name="field_invalid">Campo inválido</string>
 </resources>
