@@ -1,4 +1,4 @@
-package br.com.littlepig.domain.exceptions
+package br.com.littlepig.domain
 
 sealed class AppExceptions : Exception() {
     data class UnauthorizedException(override val message: String) : AppExceptions()

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import br.com.littlepig.R
 import br.com.littlepig.data.model.balance.Balance
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
@@ -111,31 +110,14 @@ class HomePageFragment : Fragment() {
         viewModel.transactions.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Success<*> -> {
-                    Log.d("log", "transactionsAdapter: ${state.data}")
                     @Suppress("UNCHECKED_CAST")
                     transactionAdapter.submitList(state.data as MutableList<Balance>) //TODO consultar melhoria para nao usar cast
                 }
 
-                is UIState.Empty -> {
-                    context?.showToast(state.message)
-                }
-
                 is UIState.Error -> {
-                    context?.showToast(state.error)
-                }
-
-                UIState.NotAuthenticated -> {
-                    findNavController().navigate(
-                        HomePageFragmentDirections
-                            .navigateToLoginPageFragment()
-                    )
-                }
-
-                UIState.TokenExpired -> {
-                    findNavController().navigate(
-                        HomePageFragmentDirections
-                            .navigateToLoginPageFragment()
-                    )
+                    context?.let {
+                        it.showToast(state.error.asString(it))
+                    }
                 }
             }
         }
@@ -145,31 +127,14 @@ class HomePageFragment : Fragment() {
         viewModel.balance.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Success<*> -> {
-                    Log.d("log", "balanceAdapter: ${state.data}")
                     @Suppress("UNCHECKED_CAST")
                     balanceAdapter.submitList(state.data as MutableList<UserBalanceResponseItem>?)//TODO consultar melhoria para nao usar cast
                 }
 
-                is UIState.Empty -> {
-                    context?.showToast(state.message)
-                }
-
                 is UIState.Error -> {
-                    context?.showToast(state.error)
-                }
-
-                UIState.NotAuthenticated -> {
-                    findNavController().navigate(
-                        HomePageFragmentDirections
-                            .navigateToLoginPageFragment()
-                    )
-                }
-
-                UIState.TokenExpired -> {
-                    findNavController().navigate(
-                        HomePageFragmentDirections
-                            .navigateToLoginPageFragment()
-                    )
+                    context?.let {
+                        it.showToast(state.error.asString(it))
+                    }
                 }
             }
         }
@@ -183,10 +148,11 @@ class HomePageFragment : Fragment() {
                     loadCurrentBalance() //TODO ver questao do scroll da recycler perdendo o estado
                 }
 
-                is UIState.Empty -> {}
-                is UIState.Error -> {}
-                UIState.NotAuthenticated -> {}
-                UIState.TokenExpired -> {}
+                is UIState.Error -> {
+                    context?.let {
+                        it.showToast(state.error.asString(it))
+                    }
+                }
             }
         }
     }

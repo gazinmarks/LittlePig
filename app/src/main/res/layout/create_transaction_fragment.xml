@@ -48,6 +48,7 @@
         android:backgroundTint="@color/white"
         android:hint="@string/value_desired"
         android:paddingStart="@dimen/ten_dp_size"
+        android:paddingEnd="@dimen/ten_dp_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_transaction_field" />

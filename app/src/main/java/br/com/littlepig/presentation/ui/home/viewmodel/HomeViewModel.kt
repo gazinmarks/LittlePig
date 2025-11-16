@@ -3,11 +3,13 @@ package br.com.littlepig.presentation.ui.home.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.littlepig.common.Result
 import br.com.littlepig.di.IoDispatcher
-import br.com.littlepig.domain.exceptions.AppExceptions
 import br.com.littlepig.domain.usecase.balance.IBalanceUseCase
 import br.com.littlepig.domain.usecase.transactions.IDeleteTransactionUseCase
 import br.com.littlepig.domain.usecase.transactions.IGetTransactionsUseCase
+import br.com.littlepig.presentation.ErrorMapper
+import br.com.littlepig.presentation.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -34,67 +36,62 @@ class HomeViewModel @Inject constructor(
 
     fun loadTransactions(date: Long) {
         scope.launch {
-            transactionsUseCase.invoke(date).fold(
-                onSuccess = { userListBalance ->
-                    _transactions.postValue(UIState.Success(userListBalance))
-                },
-                onFailure = { exception ->
-                    _transactions.postValue(mapExceptionsToUIState(exception))
+            when (val result = transactionsUseCase.invoke(date)) {
+                is Result.Success -> {
+                    _transactions.postValue(UIState.Success(result.data))
                 }
-            )
+
+                is Result.Error -> {
+                    _transactions.postValue(
+                        UIState.Error(
+                            ErrorMapper.mapToUiText(result.error)
+                        )
+                    )
+                }
+            }
         }
     }
 
     fun loadBalance(date: Long) = runCatching {
         scope.launch {
-            balanceUseCase.invoke(date).fold(
-                onSuccess = { listItems ->
-                    _balance.postValue(UIState.Success(listItems))
-                },
-                onFailure = { exception ->
-                    _balance.postValue(mapExceptionsToUIState(exception))
+            when (val result = balanceUseCase.invoke(date)) {
+                is Result.Success -> {
+                    _balance.postValue(
+                        UIState.Success(result.data)
+                    )
                 }
-            )
+
+                is Result.Error -> {
+                    _balance.postValue(
+                        UIState.Error(
+                            ErrorMapper.mapToUiText(result.error)
+                        )
+                    )
+                }
+            }
         }
     }
 
     fun deleteTransactionById(id: String) {
         scope.launch {
-            deleteUseCase.invoke(id).fold(
-                onSuccess = {
-                    _deleteTransaction.postValue(UIState.Success(it.status))
-                },
-                onFailure = {
-                    _deleteTransaction.postValue(mapExceptionsToUIState(it))
+            when (val result = deleteUseCase.invoke(id)) {
+                is Result.Success -> _deleteTransaction.postValue(
+                    UIState.Success(result.data)
+                )
+
+                is Result.Error -> {
+                    _deleteTransaction.postValue(
+                        UIState.Error(
+                            ErrorMapper.mapToUiText(result.error)
+                        )
+                    )
                 }
-            )
-        }
-    }
-
-    private fun mapExceptionsToUIState(exception: Throwable): UIState {
-        return when (exception) {
-            is AppExceptions.EmptyResponseException ->
-                UIState.Empty("Nenhuma transação encontrada.")
-
-            is AppExceptions.UnauthorizedException -> {
-                UIState.NotAuthenticated
-            }
-
-            is AppExceptions.TokenNotFound -> {
-                UIState.TokenExpired
-            }
-
-            else -> {
-                UIState.Error(error = exception.message ?: "Erro desconhecido")
             }
         }
     }
 
     sealed class UIState {
         data class Success<T>(val data: T) : UIState()
-        data class Error(val error: String) : UIState()
-        data class Empty(val message: String) : UIState()
-        data object TokenExpired : UIState()
-        data object NotAuthenticated : UIState()
+        data class Error(val error: UiText) : UIState()
     }
 }

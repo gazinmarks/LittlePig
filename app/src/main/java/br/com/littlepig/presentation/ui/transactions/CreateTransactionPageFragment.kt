@@ -1,18 +1,17 @@
 package br.com.littlepig.presentation.ui.transactions
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import br.com.littlepig.R
 import br.com.littlepig.databinding.CreateTransactionFragmentBinding
 import br.com.littlepig.presentation.ui.transactions.viewmodel.CreateTransactionViewModel
 import br.com.littlepig.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import java.math.BigDecimal
 
 @AndroidEntryPoint
 class CreateTransactionPageFragment : Fragment() {
@@ -53,7 +52,7 @@ class CreateTransactionPageFragment : Fragment() {
 
     private fun createNewTransaction() = with(binding) {
         val description = nameTransactionField.text.toString()
-        val value = BigDecimal(valueTransactionField.text.toString())
+        val value = valueTransactionField.text.toString()
         val type = if (receiptButton.isChecked) {
             receiptButton.text
         } else {
@@ -68,16 +67,24 @@ class CreateTransactionPageFragment : Fragment() {
         viewModel.newTransaction.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is CreateTransactionViewModel.State.Success<*> -> {
-                    context?.showToast("Criado com sucesso!")
+                    context?.showToast(getString(R.string.create_successfully))
                     goToHomePage()
                 }
 
                 is CreateTransactionViewModel.State.Error -> {
-                    context?.showToast("${state.exception}")
-                    Log.d("log", "${state.exception}")
+                    context?.showToast(state.message.asString(requireContext()))
+                }
+
+                is CreateTransactionViewModel.State.ValueEmpty -> {
+                    context?.showToast(state.message.asString(requireContext()))
+                    setStrokeErrorEditText()
                 }
             }
         }
+    }
+
+    private fun setStrokeErrorEditText() = with(binding) {
+        valueTransactionField.error = getString(R.string.required_field)
     }
 
     private fun goToHomePage() {

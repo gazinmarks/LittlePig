@@ -1,11 +1,12 @@
 package br.com.littlepig.domain.usecase.balance
 
-import android.util.Log
+import br.com.littlepig.common.Result
+import br.com.littlepig.common.mapError
+import br.com.littlepig.common.mapToDomainErrors
 import br.com.littlepig.data.model.balance.UserBalanceResponseItem
-import br.com.littlepig.data.repository.IUserRepository
-import br.com.littlepig.domain.exceptions.AppExceptions
+import br.com.littlepig.data.repository.user.IUserRepository
+import br.com.littlepig.domain.enums.DomainError
 import br.com.littlepig.preferences.DataStorePreferencesManager
-import br.com.littlepig.utils.Commons.LOG_TAG
 import br.com.littlepig.utils.dateFormat
 import br.com.littlepig.utils.getUserToken
 import javax.inject.Inject
@@ -14,38 +15,20 @@ class BalanceUseCase @Inject constructor(
     private val repository: IUserRepository,
     private val dataStore: DataStorePreferencesManager
 ) : IBalanceUseCase {
-    override suspend fun invoke(date: Long): Result<List<UserBalanceResponseItem>> {
-        return runCatching {
-            val formattedDate = date.dateFormat()
+    override suspend fun invoke(date: Long): Result<List<UserBalanceResponseItem>, DomainError> {
+        val formattedDate = date.dateFormat()
 
-            val token =
-                dataStore.getUserToken() ?: throw AppExceptions.TokenNotFound("Token not found")
+        val token =
+            dataStore.getUserToken() ?: return Result.Error(DomainError.TOKEN_NOT_FOUND)
 
-            val response = repository.getUserBalance(formattedDate, "Bearer $token")
+        if (formattedDate.isBlank()) {
+            return Result.Error(DomainError.EMPTY_TRANSACTION_DATE)
+        }
 
-            Log.d("GABRIEL", "response: ${response.body()}, $response")
+        val response = repository.getUserBalance(formattedDate, "Bearer $token")
 
-            when {
-                response.isSuccessful -> {
-                    response.body() ?: throw AppExceptions.EmptyResponseException("Resposta vazia")
-                }
-
-                response.code() == 401 -> {
-                    throw AppExceptions.UnauthorizedException(
-                        "Sessão expirada. Faça login novamente"
-                    )
-                }
-
-                else -> {
-                    throw AppExceptions.UnknownException(
-                        "Erro ${response.code()} - ${response.body()}"
-                    )
-                }
-            }
-        }.onSuccess {
-            Log.d(LOG_TAG, "transacoes retornadas com sucesso $it")
-        }.onFailure {
-            Log.d(LOG_TAG, "erro $it")
+        return response.mapError {
+            mapToDomainErrors(it)
         }
     }
 }

@@ -1,7 +1,7 @@
 package br.com.littlepig
 
 import br.com.littlepig.data.model.UserLoginResponse
-import br.com.littlepig.data.repository.IUserRepository
+import br.com.littlepig.data.repository.user.IUserRepository
 import br.com.littlepig.domain.login.LoginUseCase
 import br.com.littlepig.domain.login.LoginUseCase.Companion.KEY_USER_TOKEN
 import br.com.littlepig.preferences.IDataStorePreferences

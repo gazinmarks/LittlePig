@@ -3,13 +3,15 @@ package br.com.littlepig.presentation.ui.transactions.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import br.com.littlepig.common.Result
 import br.com.littlepig.di.IoDispatcher
 import br.com.littlepig.domain.usecase.transactions.ICreateTransactionUseCase
+import br.com.littlepig.presentation.ErrorMapper
+import br.com.littlepig.presentation.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.math.BigDecimal
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,24 +26,39 @@ class CreateTransactionViewModel @Inject constructor(
 
     fun createTransaction(
         description: String,
-        value: BigDecimal,
+        value: String,
         type: String,
         date: Long
     ) {
         scope.launch {
-            useCase.invoke(description, value, type, date).fold(
-                onSuccess = {
-                    _newTransaction.postValue(State.Success(it))
-                },
-                onFailure = {
-                    _newTransaction.postValue(State.Error(it))
+            if (value.isBlank()) {
+                _newTransaction.postValue(
+                    State.ValueEmpty(
+                        UiText.DynamicResource("Valor da transação não pode ser nulo")
+                    )
+                )
+                return@launch
+            }
+
+            when (val result = useCase.invoke(description, value.toBigDecimal(), type, date)) {
+                is Result.Error -> {
+                    _newTransaction.postValue(
+                        State.Error(
+                            ErrorMapper.mapToUiText(result.error)
+                        )
+                    )
                 }
-            )
+
+                is Result.Success -> {
+                    _newTransaction.postValue(State.Success(result.data))
+                }
+            }
         }
     }
 
     sealed class State {
         data class Success<T>(val data: T) : State()
-        data class Error(val exception: Throwable) : State()
+        data class Error(val message: UiText) : State()
+        data class ValueEmpty(val message: UiText) : State()
     }
 }

@@ -15,14 +15,13 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
-import java.math.BigDecimal
 
 interface UserService {
     @POST("/users")
-    suspend fun register(@Body user: UserRegisterRequest): User
+    suspend fun register(@Body user: UserRegisterRequest): Response<User>
 
     @POST("/login")
-    suspend fun login(@Body user: UserLoginRequest): UserLoginResponse
+    suspend fun login(@Body user: UserLoginRequest): Response<UserLoginResponse>
 
     @GET("/balance")
     suspend fun getUserBalance(
