@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import br.com.littlepig.R
 import br.com.littlepig.databinding.RegisterPageFragmentBinding
-import br.com.littlepig.presentation.main.MainActivity
+import br.com.littlepig.presentation.ui.UiText
 import br.com.littlepig.presentation.ui.register.viewmodel.RegisterViewModel
 import br.com.littlepig.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,13 +54,15 @@ class RegisterPageFragment : Fragment() {
     private fun updateUI() {
         viewModel.user.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is RegisterViewModel.State.Success -> {
-                    context?.showToast("Usuario registrado com sucesso")
+                is RegisterViewModel.State.Success<*> -> {
+                    context?.showToast(
+                        (state.data as UiText.DynamicResource).asString(requireContext())
+                    )
                     navigateToLogin()
                 }
 
                 is RegisterViewModel.State.Failure -> {
-                    context?.showToast("${state.error}")
+                    context?.showToast(state.error.asString(requireContext()))
                 }
 
                 is RegisterViewModel.State.Loading -> {
