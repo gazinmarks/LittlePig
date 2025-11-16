@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.littlepig.common.Result
-import br.com.littlepig.common.RootError
 import br.com.littlepig.di.IoDispatcher
 import br.com.littlepig.domain.usecase.balance.IBalanceUseCase
 import br.com.littlepig.domain.usecase.transactions.IDeleteTransactionUseCase
@@ -24,8 +23,7 @@ class HomeViewModel @Inject constructor(
     private val deleteUseCase: IDeleteTransactionUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _transactions =
-        MutableLiveData<UIState>() // TODO ver maneira de observar apenas um livedata
+    private val _transactions = MutableLiveData<UIState>() // TODO ver maneira de observar apenas um livedata
     val transactions: LiveData<UIState> = _transactions
 
     private val _balance = MutableLiveData<UIState>()
@@ -54,26 +52,35 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-//    fun loadBalance(date: Long) = runCatching {
-//        scope.launch {
-//            balanceUseCase.invoke(date).fold(
-//                onSuccess = { listItems ->
-//                    _balance.postValue(UIState.Success(listItems))
-//                },
-//                onFailure = { exception ->
-//                    _balance.postValue(ErrorMapper.mapToUiText)
-//                }
-//            )
-//        }
-//    }
+    fun loadBalance(date: Long) = runCatching {
+        scope.launch {
+            when (val result = balanceUseCase.invoke(date)) {
+                is Result.Success -> {
+                    _balance.postValue(
+                        UIState.Success(result.data)
+                    )
+                }
+
+                is Result.Error -> {
+                    _balance.postValue(
+                        UIState.Error(
+                            ErrorMapper.mapToUiText(result.error)
+                        )
+                    )
+                }
+            }
+        }
+    }
 
     fun deleteTransactionById(id: String) {
         scope.launch {
             when (val result = deleteUseCase.invoke(id)) {
-                is Result.Success -> _balance.postValue(UIState.Success(result.data))
+                is Result.Success -> _deleteTransaction.postValue(
+                    UIState.Success(result.data)
+                )
 
                 is Result.Error -> {
-                    _balance.postValue(
+                    _deleteTransaction.postValue(
                         UIState.Error(
                             ErrorMapper.mapToUiText(result.error)
                         )

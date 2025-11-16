@@ -97,7 +97,7 @@ class HomePageFragment : Fragment() {
     private fun getTransactions(date: Long) = viewModel.loadTransactions(date)
 
     private fun loadCurrentBalance() {
-//        viewModel.loadBalance(getCurrentDate())
+        viewModel.loadBalance(getCurrentDate())
     }
 
     private fun loadTransactions() {
@@ -110,7 +110,6 @@ class HomePageFragment : Fragment() {
         viewModel.transactions.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Success<*> -> {
-                    Log.d("log", "transactionsAdapter: ${state.data}")
                     @Suppress("UNCHECKED_CAST")
                     transactionAdapter.submitList(state.data as MutableList<Balance>) //TODO consultar melhoria para nao usar cast
                 }
@@ -128,7 +127,6 @@ class HomePageFragment : Fragment() {
         viewModel.balance.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UIState.Success<*> -> {
-                    Log.d("log", "balanceAdapter: ${state.data}")
                     @Suppress("UNCHECKED_CAST")
                     balanceAdapter.submitList(state.data as MutableList<UserBalanceResponseItem>?)//TODO consultar melhoria para nao usar cast
                 }
