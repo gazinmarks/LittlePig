@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import br.com.littlepig.R
 import br.com.littlepig.databinding.CreateTransactionFragmentBinding
 import br.com.littlepig.presentation.ui.transactions.viewmodel.CreateTransactionViewModel
 import br.com.littlepig.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import java.math.BigDecimal
 
 @AndroidEntryPoint
 class CreateTransactionPageFragment : Fragment() {
@@ -67,7 +67,7 @@ class CreateTransactionPageFragment : Fragment() {
         viewModel.newTransaction.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is CreateTransactionViewModel.State.Success<*> -> {
-                    context?.showToast("Criado com sucesso!")
+                    context?.showToast(getString(R.string.create_successfully))
                     goToHomePage()
                 }
 
@@ -75,9 +75,16 @@ class CreateTransactionPageFragment : Fragment() {
                     context?.showToast(state.message.asString(requireContext()))
                 }
 
-                is CreateTransactionViewModel.State.ValueEmpty -> TODO()
+                is CreateTransactionViewModel.State.ValueEmpty -> {
+                    context?.showToast(state.message.asString(requireContext()))
+                    setStrokeErrorEditText()
+                }
             }
         }
+    }
+
+    private fun setStrokeErrorEditText() = with(binding) {
+        valueTransactionField.error = getString(R.string.required_field)
     }
 
     private fun goToHomePage() {

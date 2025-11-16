@@ -12,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.math.BigDecimal
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,8 +31,16 @@ class CreateTransactionViewModel @Inject constructor(
         date: Long
     ) {
         scope.launch {
-            //TODO converter value de string para bigdecimal
-            when (val result = useCase.invoke(description, value, type, date)) {
+            if (value.isBlank()) {
+                _newTransaction.postValue(
+                    State.ValueEmpty(
+                        UiText.DynamicResource("Valor da transação não pode ser nulo")
+                    )
+                )
+                return@launch
+            }
+
+            when (val result = useCase.invoke(description, value.toBigDecimal(), type, date)) {
                 is Result.Error -> {
                     _newTransaction.postValue(
                         State.Error(
