@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import br.com.littlepig.R
 import br.com.littlepig.databinding.LoginPageFragmentBinding
+import br.com.littlepig.presentation.ui.UiText
 import br.com.littlepig.presentation.ui.login.viewmodel.LoginViewModel
 import br.com.littlepig.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,8 +58,10 @@ class LoginPageFragment : Fragment() {
     private fun updateUI() {
         viewModel.user.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is LoginViewModel.LoginState.Success -> {
-                    context?.showToast("Bem vindo!")
+                is LoginViewModel.LoginState.Success<*> -> {
+                    context?.showToast(
+                        (state.data as UiText.DynamicResource).asString(requireContext())
+                    )
                     findNavController().navigate(
                         LoginPageFragmentDirections
                             .navigateToHomePageFragment()
@@ -66,7 +69,7 @@ class LoginPageFragment : Fragment() {
                 }
 
                 is LoginViewModel.LoginState.Failure -> {
-                    context?.showToast("${state.exception}")
+                    context?.showToast(state.exception.asString(requireContext()))
                 }
             }
         }
