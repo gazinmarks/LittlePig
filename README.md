@@ -202,3 +202,19 @@ Os testes unitários do `RegisterUseCase` asseguram que o fluxo de cadastro de u
 ---
 ![Cobertura de Login](app/docs/loginUseCaseKT-report.png)
 ![Cobertura de Registro](app/docs/registerUseCaseKT-report.png)
+
+# Imagens do aplicativo
+<img width="496" height="1085" alt="image" src="https://github.com/user-attachments/assets/3e6d37fc-95b6-4cb2-8440-99debd9eba6c" />
+<img width="505" height="1087" alt="image" src="https://github.com/user-attachments/assets/0dd3ec1f-7833-4527-b3ce-db7b7520f21d" />
+<img width="500" height="1084" alt="image" src="https://github.com/user-attachments/assets/46fec976-6911-47b5-994f-0a507a2bf7fe" />
+<img width="504" height="1089" alt="image" src="https://github.com/user-attachments/assets/66f4f1e0-caf9-4691-879c-0207a659cdbc" />
+<img width="503" height="1089" alt="image" src="https://github.com/user-attachments/assets/cfbf0c10-5317-4611-89af-ca1c1fd3d11e" />
+<img width="502" height="1083" alt="image" src="https://github.com/user-attachments/assets/57de8636-9d3a-45f7-bf9c-96c7b10e67b8" />
+<img width="499" height="1090" alt="image" src="https://github.com/user-attachments/assets/57c2e850-0148-4ec4-8aa7-d78f7a0ae197" />
+<img width="504" height="1088" alt="image" src="https://github.com/user-attachments/assets/32db6d1b-81f3-4122-ba51-5571bc8751f9" />
+<img width="498" height="1087" alt="image" src="https://github.com/user-attachments/assets/bc3ea3cf-26a4-4df4-83b0-0f6890847b0a" />
+<img width="499" height="1087" alt="image" src="https://github.com/user-attachments/assets/92d06cac-e9be-487a-99f7-173e3cb82346" />
+<img width="498" height="1085" alt="image" src="https://github.com/user-attachments/assets/a067529a-31c6-4b11-a752-12006a84ff04" />
+<img width="501" height="1085" alt="image" src="https://github.com/user-attachments/assets/d73d5bda-00aa-422c-96ed-611ed1eecfcc" />
+
+
